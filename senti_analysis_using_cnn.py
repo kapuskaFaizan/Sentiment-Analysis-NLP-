@@ -61,16 +61,16 @@ model.add(Conv1D(32,7,activation='relu'))
 model.add(GlobalMaxPooling1D())
           
 
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(1, activation='softmax'))
 model.summary()
 
 
 # In[24]:
 
 
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 ## Fit the model
-model.fit(data, np.array(labels), validation_split=0.2, epochs=1)
+model.fit(data, np.array(labels), validation_split=0.2, epochs=5)
 
 
 # In[7]:
