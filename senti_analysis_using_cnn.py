@@ -61,7 +61,7 @@ model.add(Conv1D(32,7,activation='relu'))
 model.add(GlobalMaxPooling1D())
           
 
-model.add(Dense(1, activation='softmax'))
+model.add(Dense(1, activation='linear'))
 model.summary()
 
 
