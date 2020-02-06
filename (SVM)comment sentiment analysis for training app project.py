@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
-
 from sklearn.preprocessing import LabelEncoder
 import nltk
 import string
@@ -25,8 +22,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import model_selection, naive_bayes, svm
 
 
-# In[3]:
-
 
 #load_data and EDA
 df1= pd.read_csv('C:/Users/faiza/Downloads/4000_comment_data_reset.csv', error_bad_lines=False)
@@ -44,9 +39,6 @@ df['punc_count'] = df['Comment Text'].apply(lambda x : len([a for a in x if a in
 df[['word_count', 'char_count', 'word_density','punc_count']].head(10)
 
 
-# In[4]:
-
-
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -59,9 +51,6 @@ plt.imshow(wordcloud)
 plt.axis('off')
 
 
-# In[5]:
-
-
 l= df.loc[df['sentiment'] =='2']
 k= (' '.join(l['Comment Text']))
 wordcloud = WordCloud(width = 1000, height = 500).generate(k)
@@ -70,22 +59,12 @@ plt.imshow(wordcloud)
 plt.axis('off')
 
 
-# In[6]:
-
-
 df['Comment Text'].replace(r'[^\w\s]',' ',regex=True,inplace=True)#pun
 df['Comment Text'].replace(r'\W*\b\w{1,2}\b', "", regex=True,inplace=True)
 nltk.download('wordnet')
 
-
-# In[7]:
-
-
 df= df.loc[df['sentiment']!='4']
 df['sentiment'].value_counts()
-
-
-# In[8]:
 
 
 two= df.loc[df['sentiment']=='2']
@@ -96,13 +75,7 @@ df=df.append(two)
 df['sentiment'].value_counts().plot(kind='bar',figsize=(7,4));
 
 
-# In[9]:
-
-
 df=df.sample(frac=1)
-
-
-# In[10]:
 
 
 w_tokenizer = nltk.tokenize.WhitespaceTokenizer()
@@ -115,15 +88,9 @@ def lemmatize_text(text):
 df['Comment Text'] = df['Comment Text'].apply(lemmatize_text)
 
 
-# In[11]:
-
-
 from nltk.corpus import stopwords
 stop = stopwords.words('english')
 df['Comment Text']=df['Comment Text'].apply(lambda x: [item for item in x if item not in stop])
-
-
-# In[12]:
 
 
 alll= df['Comment Text']
@@ -131,14 +98,6 @@ allwords=list(alll)
 k = sum(allwords,[])
 np_k = np.array(k)
 
-
-# In[13]:
-
-
-df
-
-
-# In[14]:
 
 
 #stopwords = nltk.corpus.stopwords.words('english')
@@ -148,17 +107,8 @@ freq_df= pd.DataFrame(freq.items())
 freq_df=freq_df.sort_values(by=[1],ascending=False)
 
 
-# In[17]:
-
-
 jkl= freq_df.loc[:10,:]
-jkl
 
-
-# In[26]:
-
-
-###########################################################
 values = np.array(jkl[0])
 
 indexes = np.array(jkl[1])
@@ -168,26 +118,12 @@ bar_width = 5.35
 plt.bar(values,indexes)
 
 
-# In[284]:
-
-
 Train_X, Test_X, Train_Y, Test_Y = model_selection.train_test_split(df['Comment Text'],df['sentiment'],test_size=0.1)
 
 
-# In[285]:
-
-
-Train_Y.value_counts()#.plot(kind='hist',figsize=(7,6))
-
-
-# In[286]:
-
+Train_Y.value_counts()
 
 Test_Y.value_counts()
-
-
-# In[287]:
-
 
 def dummy_fun(doc):
     return doc
@@ -200,22 +136,10 @@ tfidf = TfidfVectorizer(
 
 tfidf.fit(df['Comment Text'])
 
-
-# In[288]:
-
-
 tfidf.transform(df['Comment Text'])
-
-
-# In[289]:
-
 
 Train_X_Tfidf = tfidf.transform(Train_X)
 Test_X_Tfidf = tfidf.transform(Test_X)
-
-
-# In[294]:
-
 
 # SVM
 from sklearn.metrics import accuracy_score
@@ -227,16 +151,8 @@ predictions_SVM = SVM.predict(Test_X_Tfidf)
 
 print("SVM Accuracy Score -> ",accuracy_score(predictions_SVM, Test_Y)*100)
 
-
-# In[254]:
-
-
 from sklearn.metrics import classification_report
 print(classification_report(Test_Y,predictions_SVM))
-
-
-# In[257]:
-
 
 y =pd.DataFrame(Test_X).reset_index()
 z=pd.DataFrame(predictions_SVM).reset_index()
@@ -246,20 +162,4 @@ t=pd.DataFrame(Test_Y).reset_index()
 j=pd.merge(t,r,left_index=True,right_index=True)
 
 
-# In[251]:
-
-
 j.loc[j['sentiment']=='2']
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
