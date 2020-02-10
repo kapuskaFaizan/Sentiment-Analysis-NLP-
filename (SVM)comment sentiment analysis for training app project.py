@@ -159,7 +159,7 @@ z=pd.DataFrame(predictions_SVM).reset_index()
 r=pd.merge(y,z,left_index=True,right_index=True)
 r.drop('index_y',axis =1,inplace=True)
 t=pd.DataFrame(Test_Y).reset_index()
-j=pd.merge(t,r,left_index=True,right_index=True)
+compar_df=pd.merge(t,r,left_index=True,right_index=True)
 
 
-j.loc[j['sentiment']=='2']
+compar_df.loc[compar_df['sentiment']=='2']
