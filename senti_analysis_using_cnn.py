@@ -33,18 +33,16 @@ df1['airline_sentiment'].replace('positive', int('1'), regex =True, inplace = Tr
 df1['airline_sentiment'].replace('negative', int('-1'), regex =True, inplace = True)
 
 labels = df1['airline_sentiment']
-
 vocabulary_size = 20000
 tokenizer = Tokenizer(num_words= vocabulary_size)
 tokenizer.fit_on_texts(df['text'])
 sequences = tokenizer.texts_to_sequences(df['text'])
-data = [x[::-1] for x in data]#reverse order
+data = [x[::-1] for x in data]
 data = pad_sequences(sequences, maxlen=50)
 
 # Network architecture
 model = Sequential()
 model.add(Embedding(20000, 100, input_length=50))
-
 model.add(Conv1D(32,7,activation='relu'))
 model.add(MaxPooling1D(5)
 model.add(Conv1D(32,7,activation='relu'))
