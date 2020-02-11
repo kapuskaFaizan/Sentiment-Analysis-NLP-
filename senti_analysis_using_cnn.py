@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -36,20 +34,12 @@ df1['airline_sentiment'].replace('negative', int('-1'), regex =True, inplace = T
 
 labels = df1['airline_sentiment']
 
-
-# In[22]:
-
-
 vocabulary_size = 20000
 tokenizer = Tokenizer(num_words= vocabulary_size)
 tokenizer.fit_on_texts(df['text'])
 sequences = tokenizer.texts_to_sequences(df['text'])
 data = [x[::-1] for x in data]#reverse order
 data = pad_sequences(sequences, maxlen=50)
-
-
-# In[28]:
-
 
 # Network architecture
 model = Sequential()
@@ -59,40 +49,7 @@ model.add(Conv1D(32,7,activation='relu'))
 model.add(MaxPooling1D(5)
 model.add(Conv1D(32,7,activation='relu'))
 model.add(GlobalMaxPooling1D())
-          
-
 model.add(Dense(1, activation='linear'))
-model.summary()
-
-
-# In[24]:
-
-
 model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
-## Fit the model
 model.fit(data, np.array(labels), validation_split=0.2, epochs=5)
-
-
-# In[7]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
