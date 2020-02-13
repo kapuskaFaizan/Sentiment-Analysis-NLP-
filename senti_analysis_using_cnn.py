@@ -15,8 +15,10 @@ from nltk.corpus import stopwords
 from sklearn.manifold import TSNE
 import re
 import pandas as pd
+import sys
 
-csv = pd.read_csv('C:/Users/faiza/OneDrive/Desktop/data_sets/tweets.csv')
+path = sys.argv[0]
+csv = pd.read_csv(path)
 df = pd.DataFrame(csv)
 df1=df[['text','airline_sentiment']]
 
