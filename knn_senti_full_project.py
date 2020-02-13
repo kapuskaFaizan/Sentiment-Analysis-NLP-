@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
+import sys
 import re
 import pandas as pd
 from nltk.stem.porter import *
@@ -18,7 +18,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
-csv = pd.read_csv('C:/Users/faiza/OneDrive/Desktop/data_sets/tweets.csv')
+loc = sys.argv[0]
+csv = pd.read_csv(loc)
 
 df = pd.DataFrame(csv)
 
