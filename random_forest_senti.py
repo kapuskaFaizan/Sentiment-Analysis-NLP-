@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[16]:
-
-
 from sklearn import tree
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -60,31 +57,15 @@ test_bow = bow[31962:,:]
 
 x_train, x_test, y_train, y_test = train_test_split(train_bow, df1['airline_sentiment'], random_state=42, test_size=0.3)
 
-
-# In[18]:
-
-
 from sklearn.ensemble import RandomForestRegressor
 
 rf = RandomForestRegressor(n_estimators = 10, random_state = 42)
-
 rf.fit(x_train, y_train)
-
-
-# In[20]:
 
 
 predictions = rf.predict(x_test)
 
-
-# In[21]:
-
-
 x=pd.DataFrame(predictions)
-
-
-# In[22]:
-
 
 x=x.round().reset_index()
 y=pd.DataFrame(y_test).reset_index()
@@ -92,29 +73,15 @@ r=pd.merge(x,y,left_index=True,right_index=True)
 r[0] = r[0].astype(int)
 
 
-# In[24]:
-
-
 from sklearn.metrics import confusion_matrix
 print(confusion_matrix(r['airline_sentiment'],r[0]))
-
-
-# In[25]:
-
 
 from sklearn.metrics import classification_report
 print(classification_report(r['airline_sentiment'],r[0]))
 
 
-# In[26]:
-
 
 from sklearn.metrics import accuracy_score
 print(accuracy_score(r['airline_sentiment'],r[0])*100)
-
-
-# In[ ]:
-
-
 
 
