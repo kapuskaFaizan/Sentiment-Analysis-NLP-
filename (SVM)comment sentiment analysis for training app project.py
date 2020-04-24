@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
-
+from nltk.corpus import stopwords
 import re
 import pandas as pd
 from keras.utils import np_utils
@@ -88,7 +88,7 @@ def lemmatize_text(text):
 df['Comment Text'] = df['Comment Text'].apply(lemmatize_text)
 
 
-from nltk.corpus import stopwords
+
 stop = stopwords.words('english')
 df['Comment Text']=df['Comment Text'].apply(lambda x: [item for item in x if item not in stop])
 
